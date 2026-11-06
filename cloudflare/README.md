@@ -20,14 +20,14 @@ Free plan limits apply (currently up to 100,000 Worker requests/day, 5 million D
 2. In the signed-in Cloudflare account, create a D1 database named `presently-exam-data`.
 3. Replace `CREATE_D1_DATABASE_FIRST` in `cloudflare/wrangler.toml` with that database's ID. Keep the configured binding name `DB`.
 4. In GitHub repository **Settings → Secrets and variables → Actions**, add these repository secrets:
-   - `CLOUDFLARE_API_TOKEN` — a token with permission to deploy Workers and manage D1 for this account.
+   - `CLOUDFLARE_API_TOKEN` — a Cloudflare account token with **Workers Scripts Edit** and **D1 Edit** permissions, restricted to this account.
    - `CLOUDFLARE_ACCOUNT_ID` — shown in the Cloudflare dashboard URL/account overview.
    - `D1_DATABASE_ID` — the ID of the database created above.
    - `ADMIN_EMAIL` — the teacher's sign-in email.
    - `ADMIN_PASSWORD` — a unique password of at least 12 characters.
    - `OPENAI_API_KEY` — the OpenAI secret key; never place it in the source code or send it in chat.
    - `DATA_ENCRYPTION_KEY` — a random secret of at least 32 characters. Keep a secure backup; without it, encrypted exam records cannot be read.
-5. Connect the repository to GitHub Actions and push to the `main` branch. `.github/workflows/deploy-cloudflare.yml` creates the tables, uploads the secrets, and deploys the site. The public address appears in the Cloudflare Worker overview as a `workers.dev` URL.
+5. In the repository's **Actions** tab, select **Deploy exam portal to Cloudflare Workers**, then click **Run workflow**. `.github/workflows/deploy-cloudflare.yml` creates the tables, uploads the secrets, and deploys the site. The public address appears in the Cloudflare Worker overview as a `workers.dev` URL.
 
 The first student registration creates the student account immediately. Create and activate an assignment from the teacher dashboard after signing in.
 
