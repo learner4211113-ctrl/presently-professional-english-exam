@@ -16,19 +16,19 @@ A student-facing exam portal with teacher-controlled final results. Students reg
 
 ## No-monthly-hosting deployment
 
-GitHub stores the code. Cloudflare Workers serves the app and backend, and Cloudflare D1 stores encrypted exam records. GitHub Pages cannot run this server-side exam system, so deployment uses Cloudflare Workers. The included GitHub Actions workflow deploys on each push to `main`.
+GitHub stores the code. Cloudflare Workers serves the app and backend, and Cloudflare D1 stores encrypted exam records. GitHub Pages cannot run this server-side exam system, so deployment uses Cloudflare Workers. The included GitHub Actions workflow runs manually after the required account secrets are configured.
 
 1. Create a D1 database named `presently-exam-data` in Cloudflare.
 2. Replace `CREATE_D1_DATABASE_FIRST` in `cloudflare/wrangler.toml` with the database ID.
 3. In GitHub repository **Settings → Secrets and variables → Actions**, add these secrets:
-   - `CLOUDFLARE_API_TOKEN` — a Cloudflare token that can deploy Workers and manage D1.
+   - `CLOUDFLARE_API_TOKEN` — a Cloudflare account token with **Workers Scripts Edit** and **D1 Edit** permissions, restricted to this account.
    - `CLOUDFLARE_ACCOUNT_ID` — your Cloudflare account ID.
    - `D1_DATABASE_ID` — the ID from step 2.
    - `ADMIN_EMAIL` — teacher sign-in email.
    - `ADMIN_PASSWORD` — a unique password with at least 12 characters.
    - `OPENAI_API_KEY` — your OpenAI API key.
    - `DATA_ENCRYPTION_KEY` — a random secret at least 32 characters long. Save a secure backup; losing it means saved exam records cannot be decrypted.
-4. Push the repository's `main` branch. The workflow applies the database schema and deploys the portal. Cloudflare displays the public `workers.dev` address after deployment.
+4. In the repository's **Actions** tab, select **Deploy exam portal to Cloudflare Workers**, then click **Run workflow**. It applies the database schema and deploys the portal. Cloudflare displays the public `workers.dev` address after deployment.
 
 Cloudflare Free has daily request and database quotas. If a quota is reached, the portal may return errors until it resets. OpenAI API usage is billed separately; it is not included in free hosting.
 
