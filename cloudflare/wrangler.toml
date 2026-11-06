@@ -1,0 +1,21 @@
+name = "presently-professional-english-exam"
+main = "worker.mjs"
+compatibility_date = "2026-11-06"
+workers_dev = true
+
+[assets]
+directory = "../public"
+binding = "ASSETS"
+run_worker_first = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "presently-exam-data"
+database_id = "CREATE_D1_DATABASE_FIRST"
+migrations_dir = "migrations"
+
+[vars]
+OPENAI_MODEL = "gpt-4.1-mini"
+OPENAI_REALTIME_MODEL = "gpt-realtime"
+RETENTION_DAYS = "180"
+
